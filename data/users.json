@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "nome": "Nome do Usuário",
+        "email": "usuario@email.com",
+        "senha": "123456",
+        "idade": 21,
+        "sexo": "Masculino",
+        "data_nascimento": "12-01-1995"
+    }
+]
