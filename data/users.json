@@ -2,8 +2,8 @@
     {
         "id": 1,
         "nome": "José",
-        "email": "jose123@email.com",
-        "senha": "123456",
+        "email": "jose123@gmail.com",
+        "senha": "abc123",
         "idade": 21,
         "sexo": "Masculino",
         "data_nascimento": "12-01-1995"
@@ -21,7 +21,7 @@
         "id": 3,
         "nome": "Carlos",
         "email": "carlos@email.com",
-        "senha": "123456",
+        "senha": "987654",
         "idade": 25,
         "sexo": "Masculino",
         "data_nascimento": "12-01-1995"
