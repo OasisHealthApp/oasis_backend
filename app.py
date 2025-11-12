@@ -31,7 +31,7 @@ def response():
 
 @server.route('/habits', methods=['GET', 'OPTIONS'])
 def habits_data():
-    with open("data/habits.json", "r", encoding="utf-8") as file:
+    with open("data/habitos.json", "r", encoding="utf-8") as file:
         habits = json.load(file)
     return jsonify(habits)
 
