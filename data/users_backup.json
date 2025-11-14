@@ -1,0 +1,13 @@
+[
+    
+    {
+        "id": 1,
+        "nome": "José",
+        "email": "jose123@gmail.com",
+        "senha": "abc123",
+        "idade": 21,
+        "sexo": "Masculino",
+        "data_nascimento": "12-01-1995"
+    }
+
+]

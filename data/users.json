@@ -1,30 +1,26 @@
 [
     {
-        "id": 1,
-        "nome": "José",
-        "email": "jose123@gmail.com",
-        "senha": "abc123",
+        "nome": "Abraão",
+        "email": "abraao@gmail.com",
+        "senha": "$2b$12$9zEELRv6laxuH771NYADAOQQ/ocYORx8HZr8HPVxmYThN61BJq3Yi",
         "idade": 21,
-        "sexo": "Masculino",
-        "data_nascimento": "12-01-1995"
+        "data_nascimento": "2004-01-20",
+        "sexo": "Masculino"
     },
     {
-        "id": 2,
-        "nome": "Luiza",
-        "email": "luiza@email.com",
-        "senha": "123456",
-        "idade": 19,
-        "sexo": "Feminino",
-        "data_nascimento": "12-01-1995"
-    },
-    {
-        "id": 3,
         "nome": "Carlos",
-        "email": "carlos@email.com",
-        "senha": "987654",
-        "idade": 25,
-        "sexo": "Masculino",
-        "data_nascimento": "12-01-1995"
+        "email": "carlao@gmail.com",
+        "senha": "$2b$12$QUGKIg5a2F.j5/SRSzdBRu71.Gxc834iRgm2Firq8cj8SWwCgPlwS",
+        "idade": 26,
+        "data_nascimento": "2004-01-20",
+        "sexo": "Masculino"
+    },
+    {
+        "nome": "Larysse",
+        "email": "larysse@gmail.com",
+        "senha": "$2b$12$Iz7JqEAAvP5xr9cYudqViuTy8CGVxy/P7f4taWYRd12Gvha3na5M2",
+        "idade": 20,
+        "data_nascimento": null,
+        "sexo": "Feminino"
     }
 ]
-
