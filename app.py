@@ -1,4 +1,3 @@
-# Aqui importamos os módulos da nossa aplicação
 import os
 import jwt
 import json
@@ -8,15 +7,6 @@ from flask_cors import CORS, cross_origin
 import bcrypt
 
 load_dotenv()
-"""
-Se quiser importar um arquivo, basta seguir o padrão:
-
-import pasta.arquivo
-
-ou se quiser importar funções específicas, use:
-
-from pasta.nome_arquivo import funcao(ou '*' para importar todas de uma vez)
-"""
 
 server = Flask(__name__)
 CORS(server, resources={r"/*": {
