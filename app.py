@@ -8,6 +8,8 @@ import bcrypt
 
 load_dotenv()
 
+# branch abraao
+
 server = Flask(__name__)
 CORS(server, resources={r"/*": {
     "origins": "*", 
