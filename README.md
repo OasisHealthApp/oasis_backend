@@ -1,86 +1,86 @@
-# Oasis Backend - API REST
+OASIS - Backend (API)
 
-Sistema de gerenciamento de hábitos saudáveis com autenticação de usuários.
+Visão geral
 
-## 🏗️ Arquitetura
+Este repositório contém a API do OASIS (desenvolvimento). A documentação original foi consolidada neste README e os arquivos antigos foram movidos para `docs_backup/` para referência.
 
-Sistema modularizado seguindo padrões REST com separação de responsabilidades:
+Principais conceitos
 
-```
-oasis_backend/
-├── app.py                 # Aplicação principal (Factory Pattern)
-├── requirements.txt       # Dependências do projeto
-├── .env                   # Variáveis de ambiente
-├── app/
-│   ├── __init__.py
-│   ├── routes/           # Blueprints (rotas da API)
-│   │   ├── __init__.py
-│   │   ├── auth.py       # Rotas de autenticação
-│   │   └── habits.py     # Rotas de hábitos
-│   └── services/         # Lógica de negócio
-│       ├── __init__.py
-│       ├── user_service.py    # Serviços de usuários
-│       └── habit_service.py   # Serviços de hábitos
-└── data/
-    ├── users.json        # Banco de dados de usuários
-    └── habitos.json      # Banco de dados de hábitos
-```
+- Autenticação: JWT com expiração (login/signup endpoints).
+- Recursos principais: Habits (hábitos), Categories (categorias), Journal (registros diários), Users.
+- Persistência em desenvolvimento: arquivos JSON em `data/`.
 
-## 🚀 Endpoints da API
+Endpoints principais (resumo)
 
-### Autenticação (`/api`)
+Base: /api
 
-- **POST** `/api/login` - Login de usuário
-- **POST** `/api/signup` - Cadastro de novo usuário
-- **GET** `/api/users` - Listar usuários
+Auth
+- POST /api/login
+  - Payload: { "email": "user@example.com", "senha": "password" }
+  - Retorna: { token, usuario: { id, nome, email } }
 
-### Hábitos (`/api`)
+- POST /api/signup
+  - Payload: { "nome", "email", "senha" }
 
-- **GET** `/api/habits` - Listar todos os hábitos
-- **GET** `/api/habits/<id>` - Buscar hábito específico
-- **POST** `/api/habits` - Criar novo hábito
-- **PUT** `/api/habits/<id>` - Atualizar hábito
-- **DELETE** `/api/habits/<id>` - Excluir hábito
+Users
+- GET /api/users
 
-## 📦 Instalação
+Habits
+- GET /api/habits
+- GET /api/habits/user/<user_id>
+- POST /api/habits
+  - Payload exemplo: { "titulo": "Meditar", "descricao": "10 min", "categoria": 1, "repetir": true, "tipo_repeticao": "diario", "user_id": 1 }
+- PUT /api/habits/<id>
+- DELETE /api/habits/<id>
+- POST /api/habits/<id>/toggle  (ou similar) - alterna completado
 
-1. Clone o repositório
-2. Crie um ambiente virtual:
-   ```bash
-   python -m venv OasisVenv
-   source OasisVenv/bin/activate  # Linux/Mac
-   # ou
-   OasisVenv\Scripts\activate  # Windows
-   ```
+Categories
+- GET /api/categories
+- GET /api/categories?user_id=<id>
+- POST /api/categories
+- PUT /api/categories/<id>
+- DELETE /api/categories/<id>
 
-3. Instale as dependências:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Journal
+- GET /api/journal
+- GET /api/journal/user/<user_id>
+- GET /api/journal/user/<user_id>/date/<YYYY-MM-DD>
+  - Nota: agora retorna lista de registros para a data (várias entradas permitidas)
+- POST /api/journal
+  - Payload: { "conteudo": "texto", "user_id": 1, "data": "YYYY-MM-DD" }
+- PUT /api/journal/<id>
+- DELETE /api/journal/<id>
 
-4. Configure as variáveis de ambiente (`.env`):
-   ```
-   SECRET_KEY=sua_chave_secreta_aqui
-   ```
+Como integrar (rápido)
 
-5. Execute a aplicação:
-   ```bash
-   python app.py
-   ```
+- Autentique via /api/login para obter token (Bearer). O frontend usa `localStorage` para armazenar token e `usuario`.
+- Inclua o token no header Authorization quando necessário: `Authorization: Bearer <token>`.
 
-## 🔧 Tecnologias
+Exemplos de fluxo
 
-- **Flask** - Framework web
-- **Flask-CORS** - Gerenciamento de CORS
-- **bcrypt** - Hash de senhas
-- **PyJWT** - Autenticação JWT
-- **python-dotenv** - Gerenciamento de variáveis de ambiente
+1. Signup -> Login -> Criar categoria -> Criar hábito -> Marcar hábito concluído -> Registrar diário
+2. Para repetição mensal, o backend utiliza lógica baseada em `relativedelta` para lidar corretamente com meses com menos dias (ex.: fevereiro).
 
-## 👥 Equipe
+Operações de criação/atualização/remoção
 
-- Abraão Filipi dos Santos - afs6@cesar.school
-- Dilvanir Aline Alves Cabral de Melo - daacm@cesar.school
-- Emanoel Alesandro da Silva - eas3@cesar.school
-- Marcio Aureliano Pedro da Silva - maps@cesar.school
-- Maria Larysse Yasmin Lira Pereira - mlylp@cesar.school (Líder)
-- Pedro Pessôa de Albuquerque Neto - ppan@cesar.school
+- Criação: POST com JSON no corpo. Retorna 201 quando criado.
+- Atualização: PUT com JSON. Retorna 200 quando atualizado.
+- Remoção: DELETE no recurso. Retorna 200 quando excluído.
+
+Observações sobre dados
+
+- Em ambiente de desenvolvimento os dados ficam em `data/*.json` (users.json, habitos.json, categorias.json, registros_diarios.json).
+- Faça backup desses arquivos antes de mudanças manuais.
+
+Local de referência
+
+Arquivos originais movidos para `docs_backup/` no repositório para referência histórica (não apagados).
+
+Contribuição / execução local
+
+1. Ative o virtualenv: `source OasisVenv/bin/activate` (ou crie um).
+2. Instale dependências (requirements.txt) se necessário.
+3. Rode: `python app.py` (ou use um servidor WSGI para produção).
+
+--
+Este README sintetiza a documentação principal para facilitar integração e uso rápido da API. Arquivos mais detalhados permanecem em `docs_backup/`.
