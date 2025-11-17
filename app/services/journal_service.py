@@ -39,8 +39,8 @@ def listar_registros_por_usuario(user_id):
     """Retorna todos os registros de um usuário específico"""
     registros = carregar_registros()
     registros_usuario = [r for r in registros if r.get('user_id') == user_id]
-    # Ordena por data decrescente
-    registros_usuario.sort(key=lambda x: x.get('data', ''), reverse=True)
+    # Ordena por timestamp de criação decrescente para mostrar entradas mais recentes primeiro
+    registros_usuario.sort(key=lambda x: x.get('data_criacao', ''), reverse=True)
     return registros_usuario
 
 
@@ -56,10 +56,9 @@ def buscar_registro_por_id(registro_id):
 def buscar_registro_por_data(user_id, data):
     """Busca registro de um usuário em uma data específica"""
     registros = carregar_registros()
-    for registro in registros:
-        if registro.get('user_id') == user_id and registro.get('data') == data:
-            return registro
-    return None
+    # Retorna lista de registros na data especificada (agora permitimos múltiplos registros por dia)
+    encontrados = [r for r in registros if r.get('user_id') == user_id and r.get('data') == data]
+    return encontrados
 
 
 def criar_registro(conteudo, user_id, data=None):
@@ -71,12 +70,8 @@ def criar_registro(conteudo, user_id, data=None):
         data = str(datetime.now().date())
     
     registros = carregar_registros()
-    
-    # Verifica se já existe registro para esta data
-    registro_existente = buscar_registro_por_data(user_id, data)
-    if registro_existente:
-        return {"sucesso": False, "mensagem": "Já existe um registro para esta data"}
-    
+
+    # Cria um novo registro (permitimos múltiplas entradas no mesmo dia)
     novo_registro = {
         "id": gerar_id_registro(registros),
         "conteudo": conteudo,
@@ -88,7 +83,7 @@ def criar_registro(conteudo, user_id, data=None):
     registros.append(novo_registro)
     salvar_registros(registros)
     
-    return {"sucesso": True, "mensagem": "Registro criado com sucesso", "registro": novo_registro}
+    return {"sucesso": True, "mensagem": "Registro criado com sucesso", "registro": novo_registro, "atualizado": False}
 
 
 def atualizar_registro(registro_id, conteudo=None, user_id=None):

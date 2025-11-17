@@ -58,8 +58,9 @@ def create_journal_entry():
     data_registro = data.get('data')
     
     resultado = criar_registro(conteudo, user_id, data_registro)
-    
+
     if resultado['sucesso']:
+        # Sempre retornamos 201 para nova criação
         return jsonify({
             "mensagem": resultado['mensagem'],
             "registro": resultado['registro']
@@ -131,9 +132,6 @@ def get_journal_by_date(user_id, data):
         response.headers.add('Access-Control-Allow-Methods', 'GET, OPTIONS')
         return response, 200
     
-    registro = buscar_registro_por_data(user_id, data)
-    
-    if registro:
-        return jsonify(registro), 200
-    else:
-        return jsonify({"erro": "Registro não encontrado para esta data"}), 404
+    registros = buscar_registro_por_data(user_id, data)
+    # Retorna lista (pode estar vazia)
+    return jsonify(registros), 200

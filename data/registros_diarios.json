@@ -5,5 +5,26 @@
         "data": "2025-11-17",
         "user_id": 1,
         "data_criacao": "2025-11-17T17:51:29.703011"
+    },
+    {
+        "id": 2,
+        "conteudo": "Meu novo registro",
+        "data": "2025-11-17",
+        "user_id": 2,
+        "data_criacao": "2025-11-17T18:26:15.125315"
+    },
+    {
+        "id": 3,
+        "conteudo": "Mais um teste.",
+        "data": "2025-11-17",
+        "user_id": 1,
+        "data_criacao": "2025-11-17T18:33:18.241820"
+    },
+    {
+        "id": 4,
+        "conteudo": "Teste 3",
+        "data": "2025-11-17",
+        "user_id": 1,
+        "data_criacao": "2025-11-17T18:35:38.822344"
     }
 ]
