@@ -4,7 +4,9 @@ from app.services.habit_service import (
     buscar_habito_por_id, 
     criar_habito, 
     atualizar_habito, 
-    excluir_habito
+    excluir_habito,
+    alternar_completado,
+    listar_habitos_por_usuario
 )
 
 
@@ -52,10 +54,13 @@ def create_habit():
         return jsonify({"erro": "Nenhum dado recebido"}), 400
     
     titulo = data.get('titulo')
-    tempo = data.get('tempo')
+    descricao = data.get('descricao')
+    categoria = data.get('categoria')
+    repetir = data.get('repetir', False)
+    tipo_repeticao = data.get('tipo_repeticao', 'diario')
     user_id = data.get('user_id')
     
-    resultado = criar_habito(titulo, tempo, user_id)
+    resultado = criar_habito(titulo, descricao, categoria, repetir, tipo_repeticao, user_id)
     
     if resultado['sucesso']:
         return jsonify({
@@ -75,9 +80,12 @@ def update_habit(habito_id):
         return jsonify({"erro": "Nenhum dado recebido"}), 400
     
     titulo = data.get('titulo')
-    tempo = data.get('tempo')
+    descricao = data.get('descricao')
+    categoria = data.get('categoria')
+    repetir = data.get('repetir')
+    tipo_repeticao = data.get('tipo_repeticao')
     
-    resultado = atualizar_habito(habito_id, titulo, tempo)
+    resultado = atualizar_habito(habito_id, titulo, descricao, categoria, repetir, tipo_repeticao)
     
     if resultado['sucesso']:
         return jsonify({
@@ -100,3 +108,38 @@ def delete_habit(habito_id):
         }), 200
     else:
         return jsonify({"erro": resultado['mensagem']}), 404
+
+
+@habits_bp.route('/habits/<int:habito_id>/toggle', methods=['POST', 'OPTIONS'])
+def toggle_habit_complete(habito_id):
+    """Endpoint para alternar status de completado do hábito"""
+    if request.method == 'OPTIONS':
+        response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        return response, 200
+    
+    resultado = alternar_completado(habito_id)
+    
+    if resultado['sucesso']:
+        return jsonify({
+            "mensagem": resultado['mensagem'],
+            "habito": resultado['habito']
+        }), 200
+    else:
+        return jsonify({"erro": resultado['mensagem']}), 404
+
+
+@habits_bp.route('/habits/user/<int:user_id>', methods=['GET', 'OPTIONS'])
+def get_user_habits(user_id):
+    """Endpoint para listar hábitos de um usuário específico"""
+    if request.method == 'OPTIONS':
+        response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        return response, 200
+    
+    habitos = listar_habitos_por_usuario(user_id)
+    return jsonify(habitos), 200
