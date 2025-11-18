@@ -1,26 +1,32 @@
 [
     {
-        "nome": "Abraão",
+        "id": 1,
+        "nome": "Abraão F. Santos",
         "email": "abraao@gmail.com",
-        "senha": "$2b$12$9zEELRv6laxuH771NYADAOQQ/ocYORx8HZr8HPVxmYThN61BJq3Yi",
+        "senha": "$2b$12$RFFVF/s99dMXr.ToitEmTeA1pZmtrwjrGyMC4wDtcolSap3J6qElW",
         "idade": 21,
         "data_nascimento": "2004-01-20",
-        "sexo": "Masculino"
+        "sexo": "M",
+        "data_criacao": "2025-11-17"
     },
     {
-        "nome": "Carlos",
-        "email": "carlao@gmail.com",
-        "senha": "$2b$12$QUGKIg5a2F.j5/SRSzdBRu71.Gxc834iRgm2Firq8cj8SWwCgPlwS",
-        "idade": 26,
+        "id": 2,
+        "nome": "José da Silva",
+        "email": "jose@gmail.com",
+        "senha": "$2b$12$Ry5Z.T8YbTiIDblLTnkhC.68DzbvmGZzUc/7wsUP202q32hg8FOli",
+        "idade": 29,
+        "data_nascimento": "1996-12-15",
+        "sexo": "M",
+        "data_criacao": "2025-11-17"
+    },
+    {
+        "id": 3,
+        "nome": "Luiz dos Santos",
+        "email": "luiz@email.com",
+        "senha": "$2b$12$eEKyuvctZtgK7GpQjRpHHOa.G/YYzUdldYgvfKNhEY2m2YhojAv6e",
+        "idade": 21,
         "data_nascimento": "2004-01-20",
-        "sexo": "Masculino"
-    },
-    {
-        "nome": "Larysse",
-        "email": "larysse@gmail.com",
-        "senha": "$2b$12$Iz7JqEAAvP5xr9cYudqViuTy8CGVxy/P7f4taWYRd12Gvha3na5M2",
-        "idade": 20,
-        "data_nascimento": null,
-        "sexo": "Feminino"
+        "sexo": "M",
+        "data_criacao": "2025-11-17"
     }
 ]

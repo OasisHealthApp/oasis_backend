@@ -1,23 +1,18 @@
 [
     {
-        "titulo": "Beber água",
-        "hora": "8:00",
-        "id_usuario": 1
-    },
-    {
-        "titulo": "Ir à academia",
-        "hora": "10:00",
-        "id_usuario": 1
-    },
-    {
-        "titulo": "Estudar",
-        "hora": "14:00",
-        "id_usuario": 1
-    },
-    {
-        "id": 4,
-        "titulo": "oi",
-        "tempo": "4",
-        "hora": "14:00"
+        "id": 1,
+        "titulo": "Estudar Programação",
+        "descricao": "Python e JavaScript",
+        "categoria": "cat_aprendizado",
+        "repetir": true,
+        "tipo_repeticao": "semanal",
+        "dia_referencia": "2025-11-17",
+        "proxima_data": "2025-11-24",
+        "completado": true,
+        "ultimo_completado": "2025-11-17",
+        "sequencia_atual": 1,
+        "melhor_sequencia": 1,
+        "data_criacao": "2025-11-17",
+        "user_id": 1
     }
 ]

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "cat_saude",
+    "nome": "Saúde",
+    "emoji": "🏃",
+    "descricao": "Hábitos relacionados à saúde física e mental",
+    "cor": "#FF6B6B"
+  },
+  {
+    "id": "cat_produtividade",
+    "nome": "Produtividade",
+    "emoji": "💼",
+    "descricao": "Hábitos para aumentar produtividade e foco",
+    "cor": "#4ECDC4"
+  },
+  {
+    "id": "cat_aprendizado",
+    "nome": "Aprendizado",
+    "emoji": "📚",
+    "descricao": "Hábitos de estudo e desenvolvimento pessoal",
+    "cor": "#95E1D3"
+  },
+  {
+    "id": "cat_bem_estar",
+    "nome": "Bem-estar",
+    "emoji": "🧘",
+    "descricao": "Hábitos de autocuidado e bem-estar",
+    "cor": "#F38181"
+  },
+  {
+    "id": "cat_social",
+    "nome": "Social",
+    "emoji": "👥",
+    "descricao": "Hábitos relacionados a conexões sociais",
+    "cor": "#AA96DA"
+  },
+  {
+    "id": "cat_financeiro",
+    "nome": "Financeiro",
+    "emoji": "💰",
+    "descricao": "Hábitos de gestão financeira",
+    "cor": "#FCBAD3"
+  },
+  {
+    "id": "cat_criatividade",
+    "nome": "Criatividade",
+    "emoji": "🎨",
+    "descricao": "Hábitos criativos e artísticos",
+    "cor": "#FFFFD2"
+  },
+  {
+    "id": "cat_outros",
+    "nome": "Outros",
+    "emoji": "📌",
+    "descricao": "Outros hábitos diversos",
+    "cor": "#A8DADC"
+  }
+]
