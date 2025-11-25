@@ -8,16 +8,6 @@ HABITS_FILE = "data/habitos.json"
 
 
 def calcular_proxima_data(data_referencia, tipo_repeticao):
-    """
-    Calcula a próxima data baseado no tipo de repetição
-    
-    Args:
-        data_referencia: data de referência (string ou datetime)
-        tipo_repeticao: 'diario', 'semanal' ou 'mensal'
-    
-    Returns:
-        string com a próxima data no formato YYYY-MM-DD
-    """
     if isinstance(data_referencia, str):
         data_ref = datetime.strptime(data_referencia, '%Y-%m-%d')
     else:
@@ -41,7 +31,6 @@ def calcular_proxima_data(data_referencia, tipo_repeticao):
 
 
 def carregar_habitos():
-    """Carrega hábitos do arquivo JSON"""
     try:
         if os.path.exists(HABITS_FILE):
             with open(HABITS_FILE, 'r', encoding='utf-8') as file:
