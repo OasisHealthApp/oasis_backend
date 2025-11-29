@@ -28,5 +28,25 @@
         "data_nascimento": "2004-01-20",
         "sexo": "M",
         "data_criacao": "2025-11-17"
+    },
+    {
+        "id": 4,
+        "nome": "Aeda Souza",
+        "email": "aeda@cesar.school",
+        "senha": "$2b$12$3C85yMmSLHhzFrWRsYSOBOF7WYY7/lsD0rPkvVRd9EyWQgJsoSoAC",
+        "idade": 20,
+        "data_nascimento": "2025-11-13",
+        "sexo": "F",
+        "data_criacao": "2025-11-18"
+    },
+    {
+        "id": 5,
+        "nome": "Abraão",
+        "email": "admin@admin.com",
+        "senha": "$2b$12$H03YWGC0jatKtiOAoLCaY.hHZf2DFvZKo9kB0BwNhc/yYMVF1iO1y",
+        "idade": 32,
+        "data_nascimento": "1993-11-12",
+        "sexo": "M",
+        "data_criacao": "2025-11-29"
     }
 ]

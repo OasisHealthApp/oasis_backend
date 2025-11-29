@@ -3,21 +3,9 @@ import json
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
-
 HABITS_FILE = "data/habitos.json"
 
-
 def calcular_proxima_data(data_referencia, tipo_repeticao):
-    """
-    Calcula a próxima data baseado no tipo de repetição
-    
-    Args:
-        data_referencia: data de referência (string ou datetime)
-        tipo_repeticao: 'diario', 'semanal' ou 'mensal'
-    
-    Returns:
-        string com a próxima data no formato YYYY-MM-DD
-    """
     if isinstance(data_referencia, str):
         data_ref = datetime.strptime(data_referencia, '%Y-%m-%d')
     else:
@@ -28,20 +16,14 @@ def calcular_proxima_data(data_referencia, tipo_repeticao):
     elif tipo_repeticao == 'semanal':
         proxima = data_ref + timedelta(weeks=1)
     elif tipo_repeticao == 'mensal':
-        # Usa relativedelta para lidar corretamente com meses diferentes
         proxima = data_ref + relativedelta(months=1)
         
-        # Trata caso especial: se o dia não existe no próximo mês (ex: 31 em fevereiro)
-        # relativedelta já ajusta automaticamente para o último dia do mês
     else:
-        # Padrão: diário
         proxima = data_ref + timedelta(days=1)
     
     return proxima.strftime('%Y-%m-%d')
 
-
 def carregar_habitos():
-    """Carrega hábitos do arquivo JSON"""
     try:
         if os.path.exists(HABITS_FILE):
             with open(HABITS_FILE, 'r', encoding='utf-8') as file:
@@ -50,43 +32,32 @@ def carregar_habitos():
     except json.JSONDecodeError:
         return []
 
-
 def salvar_habitos(habitos):
-    """Salva hábitos no arquivo JSON"""
     with open(HABITS_FILE, 'w', encoding='utf-8') as file:
         json.dump(habitos, file, ensure_ascii=False, indent=4)
 
-
 def gerar_id_habito(habitos):
-    """Gera um ID único para novo hábito"""
     if not habitos:
         return 1
     return max(h.get('id', 0) for h in habitos) + 1
 
-
 def listar_habitos():
-    """Retorna todos os hábitos"""
     return carregar_habitos()
 
-
 def buscar_habito_por_id(habito_id):
-    """Busca um hábito específico pelo ID"""
     habitos = carregar_habitos()
     for habito in habitos:
         if habito.get('id') == habito_id:
             return habito
     return None
 
-
 def criar_habito(titulo, descricao=None, categoria=None, repetir=False, tipo_repeticao='diario', user_id=None):
-    """Cria um novo hábito"""
     if not titulo:
         return {"sucesso": False, "mensagem": "Título é obrigatório"}
     
     if not categoria:
         return {"sucesso": False, "mensagem": "Categoria é obrigatória"}
     
-    # Valida tipo de repetição
     tipos_validos = ['diario', 'semanal', 'mensal']
     if tipo_repeticao not in tipos_validos:
         tipo_repeticao = 'diario'
@@ -94,7 +65,6 @@ def criar_habito(titulo, descricao=None, categoria=None, repetir=False, tipo_rep
     habitos = carregar_habitos()
     data_hoje = str(datetime.now().date())
     
-    # Calcula próxima data se repetir está ativo
     proxima_data = None
     if repetir:
         proxima_data = calcular_proxima_data(data_hoje, tipo_repeticao)
@@ -121,9 +91,7 @@ def criar_habito(titulo, descricao=None, categoria=None, repetir=False, tipo_rep
     
     return {"sucesso": True, "mensagem": "Hábito criado com sucesso", "habito": novo_habito}
 
-
 def atualizar_habito(habito_id, titulo=None, descricao=None, categoria=None, repetir=None, tipo_repeticao=None):
-    """Atualiza um hábito existente"""
     habitos = carregar_habitos()
     
     for habito in habitos:
@@ -136,7 +104,6 @@ def atualizar_habito(habito_id, titulo=None, descricao=None, categoria=None, rep
                 habito['categoria'] = categoria
             if repetir is not None:
                 habito['repetir'] = repetir
-                # Se desativar repetição, limpa campos relacionados
                 if not repetir:
                     habito['tipo_repeticao'] = None
                     habito['proxima_data'] = None
@@ -144,7 +111,6 @@ def atualizar_habito(habito_id, titulo=None, descricao=None, categoria=None, rep
                 tipos_validos = ['diario', 'semanal', 'mensal']
                 if tipo_repeticao in tipos_validos:
                     habito['tipo_repeticao'] = tipo_repeticao
-                    # Recalcula próxima data
                     dia_ref = habito.get('dia_referencia') or habito.get('ultimo_completado') or str(datetime.now().date())
                     habito['proxima_data'] = calcular_proxima_data(dia_ref, tipo_repeticao)
             
@@ -153,9 +119,7 @@ def atualizar_habito(habito_id, titulo=None, descricao=None, categoria=None, rep
     
     return {"sucesso": False, "mensagem": "Hábito não encontrado"}
 
-
 def excluir_habito(habito_id):
-    """Exclui um hábito"""
     habitos = carregar_habitos()
     
     for i, habito in enumerate(habitos):
@@ -166,9 +130,7 @@ def excluir_habito(habito_id):
     
     return {"sucesso": False, "mensagem": "Hábito não encontrado"}
 
-
 def alternar_completado(habito_id):
-    """Alterna o status de completado de um hábito"""
     habitos = carregar_habitos()
     
     for habito in habitos:
@@ -180,11 +142,9 @@ def alternar_completado(habito_id):
                 habito['ultimo_completado'] = data_hoje
                 habito['sequencia_atual'] = habito.get('sequencia_atual', 0) + 1
                 
-                # Atualiza melhor sequência
                 if habito['sequencia_atual'] > habito.get('melhor_sequencia', 0):
                     habito['melhor_sequencia'] = habito['sequencia_atual']
                 
-                # Se o hábito tem repetição, calcula a próxima data
                 if habito.get('repetir') and habito.get('tipo_repeticao'):
                     habito['dia_referencia'] = data_hoje
                     habito['proxima_data'] = calcular_proxima_data(data_hoje, habito['tipo_repeticao'])
@@ -198,9 +158,7 @@ def alternar_completado(habito_id):
     
     return {"sucesso": False, "mensagem": "Hábito não encontrado"}
 
-
 def listar_habitos_por_usuario(user_id):
-    """Retorna todos os hábitos de um usuário específico"""
     habitos = carregar_habitos()
     habitos_usuario = [h for h in habitos if h.get('user_id') == user_id]
     return habitos_usuario

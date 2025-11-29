@@ -9,13 +9,10 @@ from app.services.habit_service import (
     listar_habitos_por_usuario
 )
 
-
 habits_bp = Blueprint('habits', __name__, url_prefix='/api')
-
 
 @habits_bp.route('/habits', methods=['GET', 'OPTIONS'])
 def get_habits():
-    """Endpoint para listar todos os hábitos"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -26,10 +23,8 @@ def get_habits():
     habitos = listar_habitos()
     return jsonify(habitos), 200
 
-
 @habits_bp.route('/habits/<int:habito_id>', methods=['GET', 'OPTIONS'])
 def get_habit(habito_id):
-    """Endpoint para buscar um hábito específico"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -44,10 +39,8 @@ def get_habit(habito_id):
     else:
         return jsonify({"erro": "Hábito não encontrado"}), 404
 
-
 @habits_bp.route('/habits', methods=['POST'])
 def create_habit():
-    """Endpoint para criar um novo hábito"""
     data = request.get_json()
     
     if not data:
@@ -70,10 +63,8 @@ def create_habit():
     else:
         return jsonify({"erro": resultado['mensagem']}), 400
 
-
 @habits_bp.route('/habits/<int:habito_id>', methods=['PUT'])
 def update_habit(habito_id):
-    """Endpoint para atualizar um hábito existente"""
     data = request.get_json()
     
     if not data:
@@ -95,10 +86,8 @@ def update_habit(habito_id):
     else:
         return jsonify({"erro": resultado['mensagem']}), 404
 
-
 @habits_bp.route('/habits/<int:habito_id>', methods=['DELETE'])
 def delete_habit(habito_id):
-    """Endpoint para excluir um hábito"""
     resultado = excluir_habito(habito_id)
     
     if resultado['sucesso']:
@@ -109,10 +98,8 @@ def delete_habit(habito_id):
     else:
         return jsonify({"erro": resultado['mensagem']}), 404
 
-
 @habits_bp.route('/habits/<int:habito_id>/toggle', methods=['POST', 'OPTIONS'])
 def toggle_habit_complete(habito_id):
-    """Endpoint para alternar status de completado do hábito"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -130,10 +117,8 @@ def toggle_habit_complete(habito_id):
     else:
         return jsonify({"erro": resultado['mensagem']}), 404
 
-
 @habits_bp.route('/habits/user/<int:user_id>', methods=['GET', 'OPTIONS'])
 def get_user_habits(user_id):
-    """Endpoint para listar hábitos de um usuário específico"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')

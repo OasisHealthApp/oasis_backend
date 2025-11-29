@@ -47,5 +47,19 @@
         "data": "2025-11-17",
         "user_id": 1,
         "data_criacao": "2025-11-17T20:40:57.257574"
+    },
+    {
+        "id": 8,
+        "conteudo": "Projeto, finalmente, concluído!!!!",
+        "data": "2025-11-24",
+        "user_id": 1,
+        "data_criacao": "2025-11-24T20:01:01.058598"
+    },
+    {
+        "id": 10,
+        "conteudo": "Este dia foi marcado por um (quase) burnout. ;-;",
+        "data": "2025-11-29",
+        "user_id": 1,
+        "data_criacao": "2025-11-29T20:31:52.293306"
     }
 ]

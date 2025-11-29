@@ -1,13 +1,10 @@
 from flask import Blueprint, request, jsonify
 from app.services.user_service import cadastrar_usuario, autenticar_usuario, listar_usuarios, atualizar_usuario
 
-
 auth_bp = Blueprint('auth', __name__, url_prefix='/api')
-
 
 @auth_bp.route('/login', methods=['POST', 'OPTIONS'])
 def login():
-    """Endpoint de login de usuário"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -36,10 +33,8 @@ def login():
     else:
         return jsonify({"erro": resultado['mensagem']}), 401
 
-
 @auth_bp.route('/signup', methods=['POST', 'OPTIONS'])
 def signup():
-    """Endpoint de cadastro de novo usuário"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -68,10 +63,8 @@ def signup():
     else:
         return jsonify({"erro": resultado['mensagem']}), 400
 
-
 @auth_bp.route('/users', methods=['GET', 'OPTIONS'])
 def get_users():
-    """Endpoint para listar todos os usuários (sem senhas)"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -82,10 +75,8 @@ def get_users():
     usuarios = listar_usuarios()
     return jsonify(usuarios), 200
 
-
 @auth_bp.route('/users/<int:user_id>', methods=['PUT', 'OPTIONS'])
 def update_user(user_id):
-    """Endpoint para atualizar dados de um usuário"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -97,7 +88,6 @@ def update_user(user_id):
     if not data:
         return jsonify({"erro": "Nenhum dado recebido"}), 400
     
-    # Valida campos obrigatórios
     if 'nome' not in data or 'email' not in data:
         return jsonify({"erro": "Nome e email são obrigatórios"}), 400
     
