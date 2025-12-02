@@ -1,13 +1,10 @@
 from flask import Blueprint, request, jsonify
-from app.services.user_service import cadastrar_usuario, autenticar_usuario, listar_usuarios, atualizar_usuario
-
+from app.services.user_service import cadastrar_usuario, autenticar_usuario, atualizar_usuario, deletar_usuario
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api')
 
-
 @auth_bp.route('/login', methods=['POST', 'OPTIONS'])
 def login():
-    """Endpoint de login de usuário"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -36,10 +33,8 @@ def login():
     else:
         return jsonify({"erro": resultado['mensagem']}), 401
 
-
 @auth_bp.route('/signup', methods=['POST', 'OPTIONS'])
 def signup():
-    """Endpoint de cadastro de novo usuário"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -68,45 +63,37 @@ def signup():
     else:
         return jsonify({"erro": resultado['mensagem']}), 400
 
-
-@auth_bp.route('/users', methods=['GET', 'OPTIONS'])
-def get_users():
-    """Endpoint para listar todos os usuários (sem senhas)"""
+@auth_bp.route('/users/<int:user_id>', methods=['PUT', 'DELETE', 'OPTIONS'])
+def manage_user(user_id):
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        response.headers.add('Access-Control-Allow-Methods', 'PUT, DELETE, OPTIONS')
         return response, 200
     
-    usuarios = listar_usuarios()
-    return jsonify(usuarios), 200
-
-
-@auth_bp.route('/users/<int:user_id>', methods=['PUT', 'OPTIONS'])
-def update_user(user_id):
-    """Endpoint para atualizar dados de um usuário"""
-    if request.method == 'OPTIONS':
-        response = jsonify({'status': 'ok'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'PUT, OPTIONS')
-        return response, 200
+    if request.method == 'PUT':
+        data = request.get_json()
+        if not data:
+            return jsonify({"erro": "Nenhum dado recebido"}), 400
+        
+        if 'nome' not in data or 'email' not in data:
+            return jsonify({"erro": "Nome e email são obrigatórios"}), 400
+        
+        resultado = atualizar_usuario(user_id, data)
+        
+        if resultado['sucesso']:
+            return jsonify({
+                "mensagem": resultado['mensagem'],
+                "usuario": resultado['usuario']
+            }), 200
+        else:
+            return jsonify({"erro": resultado['mensagem']}), 400
     
-    data = request.get_json()
-    if not data:
-        return jsonify({"erro": "Nenhum dado recebido"}), 400
-    
-    # Valida campos obrigatórios
-    if 'nome' not in data or 'email' not in data:
-        return jsonify({"erro": "Nome e email são obrigatórios"}), 400
-    
-    resultado = atualizar_usuario(user_id, data)
-    
-    if resultado['sucesso']:
-        return jsonify({
-            "mensagem": resultado['mensagem'],
-            "usuario": resultado['usuario']
-        }), 200
-    else:
-        return jsonify({"erro": resultado['mensagem']}), 400
+    elif request.method == 'DELETE':
+        resultado = deletar_usuario(user_id)
+        
+        if resultado['sucesso']:
+            return jsonify({"mensagem": resultado['mensagem']}), 200
+        else:
+            return jsonify({"erro": resultado['mensagem']}), 404

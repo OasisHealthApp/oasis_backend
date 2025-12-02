@@ -1,12 +1,5 @@
 [
     {
-        "id": 1,
-        "conteudo": "Front-End Concluído",
-        "data": "2025-11-17",
-        "user_id": 1,
-        "data_criacao": "2025-11-17T17:51:29.703011"
-    },
-    {
         "id": 2,
         "conteudo": "Meu novo registro",
         "data": "2025-11-17",
@@ -14,38 +7,11 @@
         "data_criacao": "2025-11-17T18:26:15.125315"
     },
     {
-        "id": 3,
-        "conteudo": "Mais um teste.",
-        "data": "2025-11-17",
-        "user_id": 1,
-        "data_criacao": "2025-11-17T18:33:18.241820"
-    },
-    {
-        "id": 4,
-        "conteudo": "Teste 3",
-        "data": "2025-11-17",
-        "user_id": 1,
-        "data_criacao": "2025-11-17T18:35:38.822344"
-    },
-    {
-        "id": 5,
-        "conteudo": "Novo teste",
-        "data": "2025-11-17",
-        "user_id": 1,
-        "data_criacao": "2025-11-17T20:26:57.161083"
-    },
-    {
         "id": 6,
-        "conteudo": "Este dia foi marcado por um (quase) burnout. ;-;",
+        "conteudo": "Este dia foi marcado por um (quase) burnout.",
         "data": "2025-11-17",
         "user_id": 1,
-        "data_criacao": "2025-11-17T20:29:04.782469"
-    },
-    {
-        "id": 7,
-        "conteudo": "Projeto, finalmente, concluído",
-        "data": "2025-11-17",
-        "user_id": 1,
-        "data_criacao": "2025-11-17T20:40:57.257574"
+        "data_criacao": "2025-11-17T20:29:04.782469",
+        "data_atualizacao": "2025-12-02T13:44:10.276938"
     }
 ]

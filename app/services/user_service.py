@@ -4,12 +4,9 @@ import jwt
 import bcrypt
 from datetime import datetime, timedelta
 
-
 USERS_FILE = "data/users.json"
 
-
 def carregar_usuarios():
-    
     try:
         if os.path.exists(USERS_FILE):
             with open(USERS_FILE, 'r', encoding='utf-8') as file:
@@ -18,40 +15,29 @@ def carregar_usuarios():
     except json.JSONDecodeError:
         return []
 
-
 def salvar_usuarios(usuarios):
-    
     with open(USERS_FILE, 'w', encoding='utf-8') as file:
         json.dump(usuarios, file, ensure_ascii=False, indent=4)
 
-
 def gerar_id_usuario(usuarios):
-    
     if not usuarios:
         return 1
     return max(u.get('id', 0) for u in usuarios) + 1
 
-
 def buscar_usuario_por_email(email):
-   
     usuarios = carregar_usuarios()
     for usuario in usuarios:
         if usuario.get('email') == email:
             return usuario
     return None
 
-
 def cadastrar_usuario(nome, email, senha, data_nasc=None, idade=None, sexo=None):
-   
     usuarios = carregar_usuarios()
     
-   
     if buscar_usuario_por_email(email):
         return {"sucesso": False, "mensagem": "Email já cadastrado"}
     
-    
     hash_senha = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    
     
     novo_usuario = {
         "id": gerar_id_usuario(usuarios),
@@ -69,9 +55,7 @@ def cadastrar_usuario(nome, email, senha, data_nasc=None, idade=None, sexo=None)
     
     return {"sucesso": True, "mensagem": "Usuário cadastrado com sucesso"}
 
-
 def autenticar_usuario(email, senha):
-    
     usuario = buscar_usuario_por_email(email)
     
     if not usuario:
@@ -81,10 +65,8 @@ def autenticar_usuario(email, senha):
     if not senha_hash:
         return {"sucesso": False, "mensagem": "Erro ao verificar credenciais"}
     
-  
     if not bcrypt.checkpw(senha.encode('utf-8'), senha_hash.encode('utf-8')):
         return {"sucesso": False, "mensagem": "Credenciais inválidas"}
-    
     
     SECRET_KEY = os.getenv('SECRET_KEY') or 'changeme'
     token = jwt.encode({
@@ -100,38 +82,25 @@ def autenticar_usuario(email, senha):
         "usuario": {
             "id": usuario.get('id'),
             "nome": usuario.get('nome'),
-            "email": usuario.get('email')
+            "email": usuario.get('email'),
+            "data_nascimento": usuario.get('data_nascimento'),
+            "data_nasc": usuario.get('data_nascimento'),
+            "idade": usuario.get('idade'),
+            "sexo": usuario.get('sexo')
         }
     }
 
-
-def listar_usuarios():
-    
-    usuarios = carregar_usuarios()
-    usuarios_sem_senha = []
-    
-    for usuario in usuarios:
-        usuario_limpo = {k: v for k, v in usuario.items() if k != 'senha'}
-        usuarios_sem_senha.append(usuario_limpo)
-    
-    return usuarios_sem_senha
-
-
 def buscar_usuario_por_id(user_id):
-    
     usuarios = carregar_usuarios()
     for usuario in usuarios:
         if usuario.get('id') == user_id:
             return usuario
     return None
 
-
 def atualizar_usuario(user_id, dados_atualizacao):
-    
     usuarios = carregar_usuarios()
     usuario_encontrado = None
     indice = None
-    
     
     for i, usuario in enumerate(usuarios):
         if usuario.get('id') == user_id:
@@ -142,13 +111,11 @@ def atualizar_usuario(user_id, dados_atualizacao):
     if not usuario_encontrado:
         return {"sucesso": False, "mensagem": "Usuário não encontrado"}
     
-    
     novo_email = dados_atualizacao.get('email')
     if novo_email and novo_email != usuario_encontrado.get('email'):
         usuario_email_existente = buscar_usuario_por_email(novo_email)
         if usuario_email_existente and usuario_email_existente.get('id') != user_id:
             return {"sucesso": False, "mensagem": "Email já está em uso por outro usuário"}
-    
     
     if 'nome' in dados_atualizacao:
         usuario_encontrado['nome'] = dados_atualizacao['nome']
@@ -165,20 +132,15 @@ def atualizar_usuario(user_id, dados_atualizacao):
     if 'sexo' in dados_atualizacao:
         usuario_encontrado['sexo'] = dados_atualizacao['sexo']
     
-    
     if 'senha' in dados_atualizacao and dados_atualizacao['senha']:
         nova_senha = dados_atualizacao['senha']
-       
         if len(nova_senha) < 6:
             return {"sucesso": False, "mensagem": "A senha deve ter no mínimo 6 caracteres"}
-       
         hash_senha = bcrypt.hashpw(nova_senha.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         usuario_encontrado['senha'] = hash_senha
     
-    
     usuarios[indice] = usuario_encontrado
     salvar_usuarios(usuarios)
-    
     
     usuario_retorno = {k: v for k, v in usuario_encontrado.items() if k != 'senha'}
     
@@ -186,4 +148,26 @@ def atualizar_usuario(user_id, dados_atualizacao):
         "sucesso": True,
         "mensagem": "Usuário atualizado com sucesso",
         "usuario": usuario_retorno
+    }
+
+def deletar_usuario(user_id):
+    usuarios = carregar_usuarios()
+    usuario_encontrado = None
+    indice = None
+    
+    for i, usuario in enumerate(usuarios):
+        if usuario.get('id') == user_id:
+            usuario_encontrado = usuario
+            indice = i
+            break
+    
+    if not usuario_encontrado:
+        return {"sucesso": False, "mensagem": "Usuário não encontrado"}
+    
+    usuarios.pop(indice)
+    salvar_usuarios(usuarios)
+    
+    return {
+        "sucesso": True,
+        "mensagem": "Usuário deletado com sucesso"
     }

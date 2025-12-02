@@ -8,13 +8,10 @@ from app.services.category_service import (
     listar_categorias_usuario_por_id
 )
 
-
 categories_bp = Blueprint('categories', __name__, url_prefix='/api')
-
 
 @categories_bp.route('/categories', methods=['GET', 'OPTIONS'])
 def get_categories():
-    """Endpoint para listar todas as categorias (padrão + customizadas)"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -26,10 +23,8 @@ def get_categories():
     categorias = listar_todas_categorias(user_id)
     return jsonify(categorias), 200
 
-
 @categories_bp.route('/categories/<categoria_id>', methods=['GET', 'OPTIONS'])
 def get_category(categoria_id):
-    """Endpoint para buscar uma categoria específica"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')
@@ -44,10 +39,8 @@ def get_category(categoria_id):
     else:
         return jsonify({"erro": "Categoria não encontrada"}), 404
 
-
 @categories_bp.route('/categories', methods=['POST'])
 def create_category():
-    """Endpoint para criar uma nova categoria customizada"""
     data = request.get_json()
     
     if not data:
@@ -69,10 +62,8 @@ def create_category():
     else:
         return jsonify({"erro": resultado['mensagem']}), 400
 
-
 @categories_bp.route('/categories/<int:categoria_id>', methods=['PUT'])
 def update_category(categoria_id):
-    """Endpoint para atualizar uma categoria customizada"""
     data = request.get_json()
     
     if not data:
@@ -94,10 +85,8 @@ def update_category(categoria_id):
     else:
         return jsonify({"erro": resultado['mensagem']}), 404
 
-
 @categories_bp.route('/categories/<int:categoria_id>', methods=['DELETE'])
 def delete_category(categoria_id):
-    """Endpoint para excluir uma categoria customizada"""
     data = request.get_json()
     user_id = data.get('user_id') if data else None
     
@@ -114,10 +103,8 @@ def delete_category(categoria_id):
     else:
         return jsonify({"erro": resultado['mensagem']}), 404
 
-
 @categories_bp.route('/categories/user/<int:user_id>', methods=['GET', 'OPTIONS'])
 def get_user_categories(user_id):
-    """Endpoint para listar apenas categorias customizadas de um usuário"""
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
         response.headers.add('Access-Control-Allow-Origin', '*')

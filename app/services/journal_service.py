@@ -2,9 +2,7 @@ import os
 import json
 from datetime import datetime
 
-
 JOURNAL_FILE = "data/registros_diarios.json"
-
 
 def carregar_registros():
     try:
@@ -15,21 +13,17 @@ def carregar_registros():
     except json.JSONDecodeError:
         return []
 
-
 def salvar_registros(registros):
     with open(JOURNAL_FILE, 'w', encoding='utf-8') as file:
         json.dump(registros, file, ensure_ascii=False, indent=4)
-
 
 def gerar_id_registro(registros):
     if not registros:
         return 1
     return max(r.get('id', 0) for r in registros) + 1
 
-
 def listar_registros():
     return carregar_registros()
-
 
 def listar_registros_por_usuario(user_id):
     registros = carregar_registros()
@@ -37,14 +31,12 @@ def listar_registros_por_usuario(user_id):
     registros_usuario.sort(key=lambda x: x.get('data_criacao', ''), reverse=True)
     return registros_usuario
 
-
 def buscar_registro_por_id(registro_id):
     registros = carregar_registros()
     for registro in registros:
         if registro.get('id') == registro_id:
             return registro
     return None
-
 
 def buscar_registro_por_data(user_id, data):
     registros = carregar_registros()

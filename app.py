@@ -5,32 +5,19 @@ from flask_cors import CORS
 
 load_dotenv()
 
-"""
-    Oasis Backend - API REST
-    
-    Sistema modularizado com Blueprints para:
-    - Autenticação de usuários (login/signup)
-    - Gerenciamento de hábitos (CRUD completo)
-"""
-
-
 def create_app():
-    """Factory para criar a aplicação Flask"""
     app = Flask(__name__)
     
-    # Configuração CORS
-    CORS(app, resources={r"/api/*": {
-        "origins": "*", 
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
-        "allow_headers": ["Content-Type", "Authorization"],
-        "expose_headers": ["Content-Type"]
-    }})
+    CORS(app, 
+         resources={r"/api/*": {"origins": "*"}},
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+         allow_headers=["Content-Type", "Authorization"],
+         supports_credentials=False,
+         max_age=3600)
     
-    # Configurações da aplicação
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'changeme')
     app.config['JSON_AS_ASCII'] = False
     
-    # Registrar Blueprints
     from app.routes.auth import auth_bp
     from app.routes.habits import habits_bp
     from app.routes.categories import categories_bp
@@ -41,7 +28,6 @@ def create_app():
     app.register_blueprint(categories_bp)
     app.register_blueprint(journal_bp)
     
-    # Rota raiz
     @app.route('/')
     def home():
         return {
@@ -56,7 +42,6 @@ def create_app():
         }
     
     return app
-
 
 if __name__ == "__main__":
     app = create_app()
