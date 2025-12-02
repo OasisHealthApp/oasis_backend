@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.services.user_service import cadastrar_usuario, autenticar_usuario, listar_usuarios, atualizar_usuario
+from app.services.user_service import cadastrar_usuario, autenticar_usuario, atualizar_usuario
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api')
 
@@ -62,18 +62,6 @@ def signup():
         return jsonify({"mensagem": resultado['mensagem']}), 201
     else:
         return jsonify({"erro": resultado['mensagem']}), 400
-
-@auth_bp.route('/users', methods=['GET', 'OPTIONS'])
-def get_users():
-    if request.method == 'OPTIONS':
-        response = jsonify({'status': 'ok'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'GET, OPTIONS')
-        return response, 200
-    
-    usuarios = listar_usuarios()
-    return jsonify(usuarios), 200
 
 @auth_bp.route('/users/<int:user_id>', methods=['PUT', 'OPTIONS'])
 def update_user(user_id):

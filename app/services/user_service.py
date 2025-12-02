@@ -90,16 +90,6 @@ def autenticar_usuario(email, senha):
         }
     }
 
-def listar_usuarios():
-    usuarios = carregar_usuarios()
-    usuarios_sem_senha = []
-    
-    for usuario in usuarios:
-        usuario_limpo = {k: v for k, v in usuario.items() if k != 'senha'}
-        usuarios_sem_senha.append(usuario_limpo)
-    
-    return usuarios_sem_senha
-
 def buscar_usuario_por_id(user_id):
     usuarios = carregar_usuarios()
     for usuario in usuarios:
