@@ -68,7 +68,7 @@ def autenticar_usuario(email, senha):
     if not bcrypt.checkpw(senha.encode('utf-8'), senha_hash.encode('utf-8')):
         return {"sucesso": False, "mensagem": "Credenciais inválidas"}
     
-    SECRET_KEY = os.getenv('SECRET_KEY') or 'changeme'
+    SECRET_KEY = os.getenv('SECRET_KEY') or 'secret_key'
     token = jwt.encode({
         'user_id': usuario.get('id'),
         'email': usuario.get('email'),
