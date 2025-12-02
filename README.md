@@ -1,8 +1,17 @@
 # OASIS - Backend (API)
 
+## 👥 Equipe
+
+  - Abraão Filipi dos Santos - afs6@cesar.school
+  - Dilvanir Aline Alves Cabral de Melo - daacm@cesar.school
+  - Emanoel Alesandro da Silva - eas3@cesar.school
+  - Marcio Aureliano Pedro da Silva - maps@cesar.school
+  - Maria Larysse Yasmin Lira Pereira - mlylp@cesar.school (Líder)
+  - Pedro Pessôa de Albuquerque Neto - ppan@cesar.school
+
 ## Visão geral
 
-Este repositório contém a API do OASIS (ambiente de desenvolvimento). A documentação original foi movida para `docs_backup/` e este README sintetiza as informações principais para integração e uso rápido.
+Sistema de gerenciamento de hábitos saudáveis com autenticação de usuários (Desafio 4 da disciplina Fundamentos da Programação).
 
 ## Principais conceitos
 
@@ -176,15 +185,6 @@ Base: `/api`
   - **bcrypt** - Hash de senhas
   - **PyJWT** - Autenticação JWT
   - **python-dotenv** - Gerenciamento de variáveis de ambiente
-
-  ## 👥 Equipe
-
-  - Abraão Filipi dos Santos - afs6@cesar.school
-  - Dilvanir Aline Alves Cabral de Melo - daacm@cesar.school
-  - Emanoel Alesandro da Silva - eas3@cesar.school
-  - Marcio Aureliano Pedro da Silva - maps@cesar.school
-  - Maria Larysse Yasmin Lira Pereira - mlylp@cesar.school (Líder)
-  - Pedro Pessôa de Albuquerque Neto - ppan@cesar.school
 
   ## Como integrar
 
