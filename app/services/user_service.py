@@ -149,3 +149,25 @@ def atualizar_usuario(user_id, dados_atualizacao):
         "mensagem": "Usuário atualizado com sucesso",
         "usuario": usuario_retorno
     }
+
+def deletar_usuario(user_id):
+    usuarios = carregar_usuarios()
+    usuario_encontrado = None
+    indice = None
+    
+    for i, usuario in enumerate(usuarios):
+        if usuario.get('id') == user_id:
+            usuario_encontrado = usuario
+            indice = i
+            break
+    
+    if not usuario_encontrado:
+        return {"sucesso": False, "mensagem": "Usuário não encontrado"}
+    
+    usuarios.pop(indice)
+    salvar_usuarios(usuarios)
+    
+    return {
+        "sucesso": True,
+        "mensagem": "Usuário deletado com sucesso"
+    }
