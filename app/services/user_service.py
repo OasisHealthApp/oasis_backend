@@ -82,7 +82,11 @@ def autenticar_usuario(email, senha):
         "usuario": {
             "id": usuario.get('id'),
             "nome": usuario.get('nome'),
-            "email": usuario.get('email')
+            "email": usuario.get('email'),
+            "data_nascimento": usuario.get('data_nascimento'),
+            "data_nasc": usuario.get('data_nascimento'),  # Alias para compatibilidade
+            "idade": usuario.get('idade'),
+            "sexo": usuario.get('sexo')
         }
     }
 
