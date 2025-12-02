@@ -30,5 +30,21 @@
         "melhor_sequencia": 0,
         "data_criacao": "2025-11-18",
         "user_id": 4
+    },
+    {
+        "id": 4,
+        "titulo": "Teste",
+        "descricao": "Teste",
+        "categoria": "cat_saude",
+        "repetir": true,
+        "tipo_repeticao": "semanal",
+        "dia_referencia": "2025-12-02",
+        "proxima_data": "2025-12-09",
+        "completado": true,
+        "ultimo_completado": "2025-12-02",
+        "sequencia_atual": 1,
+        "melhor_sequencia": 1,
+        "data_criacao": "2025-12-02",
+        "user_id": 1
     }
 ]

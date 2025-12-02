@@ -8,7 +8,6 @@ load_dotenv()
 def create_app():
     app = Flask(__name__)
     
-    # Configuração CORS mais permissiva
     CORS(app, 
          resources={r"/api/*": {"origins": "*"}},
          methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
